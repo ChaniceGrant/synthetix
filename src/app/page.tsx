@@ -4,7 +4,20 @@ import React, { useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { generateThemeAction } from "@/lib/actions";
 import { Visualizer } from "@/components/visualizer";
-import { Sparkles, Terminal, Code2, Copy, Hexagon } from "lucide-react";
+import { Sparkles, Terminal, Code2, Copy, Hexagon, Dices } from "lucide-react";
+
+const RANDOM_PROMPTS = [
+  "80s synthwave, neon pink and cyan, dark background",
+  "Minimalist scandinavian print, warm beige, typography heavy",
+  "Cyberpunk dystopian, high contrast, glitchy",
+  "Cottagecore, muted sage green, soft natural lighting",
+  "Vaporwave aesthetics, pastel gradients",
+  "Corporate brutalism, high contrast black and white, bold typography",
+  "Ethereal fairycore, soft pastels, magical lighting",
+  "Retro pixel art, 16-bit colors, nostalgic",
+  "Modern fintech, clean lines, trustworthy blue, high contrast",
+  "Dark academia, rich browns and golds, vintage styling"
+];
 
 export default function Home() {
   const { tokens, setTokens } = useTheme();
@@ -12,13 +25,15 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<{ type: 'idle' | 'loading' | 'success' | 'error', message: string }>({ type: 'idle', message: '' });
 
-  const handleGenerate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!prompt.trim()) return;
+  const handleGenerate = async (e?: React.FormEvent, customPrompt?: string) => {
+    if (e) e.preventDefault();
+    const promptToUse = customPrompt || prompt;
+    if (!promptToUse.trim()) return;
+    
     setLoading(true);
     setStatus({ type: 'loading', message: 'Generating system...' });
     try {
-      const newTokens = await generateThemeAction(prompt);
+      const newTokens = await generateThemeAction(promptToUse);
       if (JSON.stringify(newTokens) === JSON.stringify(tokens)) {
         setStatus({ type: 'error', message: 'Generation failed. Check API key.' });
       } else {
@@ -32,6 +47,12 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleRandom = () => {
+    const randomPrompt = RANDOM_PROMPTS[Math.floor(Math.random() * RANDOM_PROMPTS.length)];
+    setPrompt(randomPrompt);
+    handleGenerate(undefined, randomPrompt);
   };
 
   return (
@@ -80,6 +101,15 @@ export default function Home() {
                 ) : (
                   <>Generate <span className="text-[10px] font-mono opacity-60 ml-1">⌘↵</span></>
                 )}
+              </button>
+              <button
+                type="button"
+                onClick={handleRandom}
+                disabled={loading}
+                className="py-2 px-3 rounded-md bg-transparent border border-[var(--shell-border)] hover:bg-[#222] text-[var(--shell-text)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                title="Random Vibe"
+              >
+                <Dices size={16} />
               </button>
             </div>
             
