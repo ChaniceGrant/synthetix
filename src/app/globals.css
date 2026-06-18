@@ -1,21 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --brand-primary: #3b82f6;
-  --brand-secondary: #1e293b;
-  --brand-accent: #f59e0b;
-  --brand-background: #ffffff;
-  --brand-foreground: #0f172a;
-  --brand-muted: #f8fafc;
-  --brand-border: #e2e8f0;
-  --brand-font-family: 'Inter', sans-serif;
-  --brand-heading-font-family: 'Inter', sans-serif;
-  --brand-base-font-size: 16px;
-  --brand-border-radius: 1rem;
-  --brand-shadow: 0 10px 40px -10px rgb(0 0 0 / 0.08), 0 1px 3px rgb(0 0 0 / 0.05);
-  --brand-animation-speed: 0.4s;
-}
-
 @theme inline {
   --color-brand-primary: var(--brand-primary);
   --color-brand-secondary: var(--brand-secondary);
@@ -26,107 +10,123 @@
   --color-brand-border: var(--brand-border);
 }
 
+:root {
+  /* App Shell Variables */
+  --shell-bg: #0A0A0A;
+  --shell-panel: #111111;
+  --shell-border: #222222;
+  --shell-text: #EDEDED;
+  --shell-text-muted: #888888;
+  
+  /* These will be overridden by the theme provider, but here are fallbacks */
+  --brand-primary: #3b82f6;
+  --brand-secondary: #1e293b;
+  --brand-accent: #f59e0b;
+  --brand-background: #ffffff;
+  --brand-foreground: #0f172a;
+  --brand-muted: #f8fafc;
+  --brand-border: #e2e8f0;
+  --brand-font-family: 'Inter', sans-serif;
+  --brand-heading-font-family: 'Inter', sans-serif;
+  --brand-base-font-size: 16px;
+  --brand-border-radius: 8px;
+  --brand-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  --brand-animation-speed: 0.2s;
+}
+
 body {
-  background-color: var(--brand-background);
-  color: var(--brand-foreground);
-  font-family: var(--brand-font-family);
+  background-color: var(--shell-bg);
+  color: var(--shell-text);
+  font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.brand-button {
-  background-color: var(--brand-primary);
-  color: var(--brand-background);
-  padding: 0.875rem 1.75rem;
-  border-radius: var(--brand-border-radius);
-  box-shadow: 0 4px 14px 0 color-mix(in srgb, var(--brand-primary) 40%, transparent);
-  transition: all var(--brand-animation-speed) cubic-bezier(0.34, 1.56, 0.64, 1);
-  border: 1px solid color-mix(in srgb, var(--brand-primary) 80%, white 20%);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+/* Custom scrollbar - Minimalist */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
 }
 
-.brand-button:hover:not(:disabled) {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 20px 0 color-mix(in srgb, var(--brand-primary) 50%, transparent);
+/* Base Utility Classes for the IDE shell */
+.panel {
+  background-color: var(--shell-panel);
+  border: 1px solid var(--shell-border);
+}
+
+.input-minimal {
+  background-color: transparent;
+  border: 1px solid var(--shell-border);
+  color: var(--shell-text);
+  transition: border-color 0.15s ease;
+}
+
+.input-minimal:focus {
+  outline: none;
+  border-color: #555;
+}
+
+/* Components for the Canvas (Generated UI) */
+.canvas-container {
+  background-color: var(--brand-background);
+  color: var(--brand-foreground);
+  font-family: var(--brand-font-family);
+  transition: all var(--brand-animation-speed) ease;
+}
+
+.canvas-card {
+  background-color: var(--brand-muted);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-border-radius);
+  box-shadow: var(--brand-shadow);
+  transition: all var(--brand-animation-speed) ease;
+}
+
+.canvas-button {
+  background-color: var(--brand-primary);
+  color: var(--brand-background);
+  border-radius: var(--brand-border-radius);
+  box-shadow: var(--brand-shadow);
+  transition: all var(--brand-animation-speed) ease;
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 80%, white 20%);
+}
+
+.canvas-button:hover {
   filter: brightness(1.1);
 }
 
-.brand-button:active:not(:disabled) {
-  transform: translateY(1px) scale(0.98);
-}
-
-.brand-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.brand-card {
-  background-color: color-mix(in srgb, var(--brand-muted) 70%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid color-mix(in srgb, var(--brand-border) 60%, transparent);
+.canvas-button-secondary {
+  background-color: transparent;
+  color: var(--brand-foreground);
+  border: 1px solid var(--brand-border);
   border-radius: var(--brand-border-radius);
-  padding: 2rem;
-  box-shadow: var(--brand-shadow);
-  transition: all var(--brand-animation-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--brand-animation-speed) ease;
 }
 
-.brand-card:hover {
-  border-color: color-mix(in srgb, var(--brand-primary) 30%, var(--brand-border));
-  box-shadow: 0 20px 40px -10px color-mix(in srgb, var(--brand-primary) 5%, transparent), var(--brand-shadow);
+.canvas-button-secondary:hover {
+  background-color: color-mix(in srgb, var(--brand-foreground) 5%, transparent);
 }
 
-.brand-input {
-  background-color: color-mix(in srgb, var(--brand-background) 80%, transparent);
-  border: 2px solid var(--brand-border);
+.canvas-input {
+  background-color: var(--brand-background);
+  border: 1px solid var(--brand-border);
   border-radius: var(--brand-border-radius);
   color: var(--brand-foreground);
-  transition: all 0.3s ease;
+  transition: all var(--brand-animation-speed) ease;
 }
 
-.brand-input:focus {
-  border-color: var(--brand-primary);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-primary) 15%, transparent);
+.canvas-input:focus {
   outline: none;
-}
-
-/* Blob Animation */
-@keyframes blob {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
-}
-.animate-blob {
-  animation: blob 10s infinite alternate;
-}
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
-
-/* Custom scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  height: 8px;
-  width: 8px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: color-mix(in srgb, var(--brand-foreground) 5%, transparent);
-  border-radius: 8px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--brand-foreground) 20%, transparent);
-  border-radius: 8px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--brand-foreground) 30%, transparent);
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-primary) 20%, transparent);
 }

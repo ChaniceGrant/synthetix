@@ -31,17 +31,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ThemeContext.Provider value={{ tokens, setTokens }}>
-      <div 
-        style={{ 
-          transition: `all ${tokens.visuals.animationSpeed}s ease-in-out`,
-          backgroundColor: "var(--brand-background)",
-          color: "var(--brand-foreground)",
-          fontFamily: "var(--brand-font-family)",
-          minHeight: "100vh"
-        }}
-      >
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   );
 };
