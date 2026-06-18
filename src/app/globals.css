@@ -66,6 +66,13 @@ h1, h2, h3, h4, h5, h6 {
   transition: all var(--brand-animation-speed) ease;
 }
 
+.brand-glass {
+  background: color-mix(in srgb, var(--brand-background) 70%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--brand-border) 40%, transparent);
+}
+
 .brand-button {
   background-color: var(--brand-primary);
   color: var(--brand-background);
@@ -74,6 +81,12 @@ h1, h2, h3, h4, h5, h6 {
   transition: all var(--brand-animation-speed) cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 700;
   border: 2px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
 }
 
 .brand-button:hover:not(:disabled) {
@@ -83,12 +96,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .brand-button:active:not(:disabled) {
-  transform: translateY(2px);
-}
-
-.brand-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  transform: translateY(1px);
 }
 
 .brand-button-outline {
@@ -98,12 +106,28 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--brand-border-radius);
   font-weight: 700;
   transition: all var(--brand-animation-speed) ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
 }
 
 .brand-button-outline:hover:not(:disabled) {
   border-color: var(--brand-primary);
   color: var(--brand-primary);
   background-color: color-mix(in srgb, var(--brand-primary) 5%, transparent);
+}
+
+.brand-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--brand-accent);
+  color: var(--brand-background);
 }
 
 .brand-input {
