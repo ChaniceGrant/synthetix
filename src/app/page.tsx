@@ -6,7 +6,7 @@ import { generateThemeAction } from "@/lib/actions";
 import { Visualizer } from "@/components/visualizer";
 import { 
   Sparkles, 
-  Dices, 
+  Dice5, 
   Palette, 
   Settings2, 
   Loader2, 
