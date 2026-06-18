@@ -72,7 +72,7 @@ export default function Home() {
         
         {/* Playful Header & Input */}
         <header className="flex flex-col items-center text-center space-y-8 max-w-3xl mx-auto">
-          <div className="bg-white p-5 rounded-[2.5rem] shadow-xl shadow-purple-500/10 rotate-6 hover:rotate-12 transition-transform cursor-default">
+          <div className="bg-white p-5 rounded-2xl shadow-xl shadow-purple-500/10 rotate-6 hover:rotate-12 transition-transform cursor-default">
             <Sparkles size={56} className="text-[var(--shell-accent)]" fill="currentColor" />
           </div>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-800 leading-tight">
@@ -101,7 +101,7 @@ export default function Home() {
                   type="button"
                   onClick={handleRandom}
                   disabled={loading}
-                  className="px-6 py-5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold transition-all disabled:opacity-50 flex items-center justify-center border-b-4 border-slate-200 hover:border-slate-300 active:border-b-0 active:translate-y-1"
+                  className="px-6 py-5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold transition-all disabled:opacity-50 flex items-center justify-center border-b-4 border-slate-200 hover:border-slate-300 active:border-b-0 active:translate-y-1"
                   title="Surprise me!"
                 >
                   <Dices size={28} />
@@ -122,7 +122,7 @@ export default function Home() {
             
             {/* Status Bubble */}
             <div className={`absolute -bottom-20 left-1/2 -translate-x-1/2 transition-all duration-500 z-0 ${status.type !== 'idle' ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-10 scale-90 pointer-events-none'}`}>
-              <div className={`px-8 py-4 rounded-full text-lg font-bold shadow-xl border-4 border-white flex items-center gap-2 ${status.type === 'error' ? 'bg-red-100 text-red-600' : status.type === 'loading' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
+              <div className={`px-8 py-4 rounded-xl text-lg font-bold shadow-xl border-4 border-white flex items-center gap-2 ${status.type === 'error' ? 'bg-red-100 text-red-600' : status.type === 'loading' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
                 {status.type === 'loading' && <Sparkles size={20} className="animate-pulse" />}
                 {status.message}
               </div>
@@ -139,7 +139,7 @@ export default function Home() {
               <div className="w-5 h-5 rounded-full bg-yellow-400 shadow-sm border border-yellow-500/20" />
               <div className="w-5 h-5 rounded-full bg-green-400 shadow-sm border border-green-500/20" />
             </div>
-            <div className="font-extrabold text-slate-400 uppercase tracking-widest text-sm bg-white px-4 py-1.5 rounded-full shadow-sm">
+            <div className="font-extrabold text-slate-400 uppercase tracking-widest text-sm bg-white px-4 py-1.5 rounded-lg shadow-sm">
               Live Preview Sandbox
             </div>
             <div className="w-20" /> {/* Spacer for centering */}
@@ -201,7 +201,7 @@ export default function Home() {
                   {Object.entries(tokens.colors).map(([name, color]) => (
                     <div key={name} className="flex flex-col items-center gap-3 group">
                       <div 
-                        className="w-20 h-20 rounded-full shadow-xl border-4 border-white transition-transform group-hover:scale-110 group-hover:-translate-y-2 group-active:scale-95 cursor-pointer"
+                        className="w-20 h-20 rounded-2xl shadow-xl border-4 border-white transition-transform group-hover:scale-110 group-hover:-translate-y-2 group-active:scale-95 cursor-pointer"
                         style={{ backgroundColor: color, boxShadow: "var(--brand-shadow)" }}
                         title={color}
                       />
@@ -221,7 +221,7 @@ export default function Home() {
               <div className="absolute inset-0 cursor-grab active:cursor-grabbing">
                 <Visualizer />
               </div>
-              <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-sm font-black tracking-widest uppercase text-slate-800 shadow-md pointer-events-none border-2 border-white">
+              <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-lg text-sm font-black tracking-widest uppercase text-slate-800 shadow-md pointer-events-none border-2 border-white">
                 Interactive 3D
               </div>
             </div>
@@ -236,3 +236,5 @@ export default function Home() {
     </main>
   );
 }
+
+

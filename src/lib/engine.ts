@@ -51,6 +51,7 @@ export async function generateDesignSystem(prompt: string): Promise<DesignTokens
     Rules:
     - Return ONLY the JSON object.
     - No markdown formatting.
+    - Do NOT use fully rounded or "pill" designs for borderRadius (e.g. no 9999px or 50rem). Stick to standard rounding like 0.25rem, 0.5rem, or 1rem.
     - Guidelines: "${prompt}"
   `;
 
