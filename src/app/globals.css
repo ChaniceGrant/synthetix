@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+:root {
+  /* Playful Shell Variables */
+  --shell-bg: #f8fafc; /* slate-50 */
+  --shell-panel: #ffffff;
+  --shell-text: #334155;
+  --shell-accent: #8b5cf6; /* violet-500 */
+  --shell-accent-hover: #7c3aed;
+  
+  /* Fallbacks for Canvas (Will be overwritten by JS) */
+  --brand-primary: #ec4899;
+  --brand-secondary: #f472b6;
+  --brand-accent: #fbcfe8;
+  --brand-background: #ffffff;
+  --brand-foreground: #0f172a;
+  --brand-muted: #fdf2f8;
+  --brand-border: #fbcfe8;
+  --brand-font-family: 'Inter', system-ui, sans-serif;
+  --brand-heading-font-family: 'Inter', system-ui, sans-serif;
+  --brand-base-font-size: 16px;
+  --brand-border-radius: 24px;
+  --brand-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  --brand-animation-speed: 0.3s;
+}
+
 @theme inline {
   --color-brand-primary: var(--brand-primary);
   --color-brand-secondary: var(--brand-secondary);
@@ -10,85 +34,84 @@
   --color-brand-border: var(--brand-border);
 }
 
-:root {
-  /* App Shell Variables */
-  --shell-bg: #0A0A0A;
-  --shell-panel: #111111;
-  --shell-border: #222222;
-  --shell-text: #EDEDED;
-  --shell-text-muted: #888888;
-  
-  /* These will be overridden by the theme provider, but here are fallbacks */
-  --brand-primary: #3b82f6;
-  --brand-secondary: #1e293b;
-  --brand-accent: #f59e0b;
-  --brand-background: #ffffff;
-  --brand-foreground: #0f172a;
-  --brand-muted: #f8fafc;
-  --brand-border: #e2e8f0;
-  --brand-font-family: 'Inter', sans-serif;
-  --brand-heading-font-family: 'Inter', sans-serif;
-  --brand-base-font-size: 16px;
-  --brand-border-radius: 8px;
-  --brand-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  --brand-animation-speed: 0.2s;
-}
-
 body {
   background-color: var(--shell-bg);
   color: var(--shell-text);
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar - Minimalist */
+/* Playful utility classes */
+.playful-card {
+  background: var(--shell-panel);
+  border-radius: 32px;
+  box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.15); /* Soft violet shadow */
+  border: 4px solid white;
+}
+
+.playful-button {
+  background: var(--shell-accent);
+  color: white;
+  border-radius: 9999px;
+  font-weight: 800;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 0 -2px var(--shell-accent-hover), 0 15px 20px -5px rgba(139, 92, 246, 0.4);
+}
+
+.playful-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 0 -2px var(--shell-accent-hover), 0 20px 25px -5px rgba(139, 92, 246, 0.4);
+}
+
+.playful-button:active:not(:disabled) {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 -2px var(--shell-accent-hover), 0 5px 10px -5px rgba(139, 92, 246, 0.4);
+}
+
+.playful-button:disabled {
+  background: #cbd5e1;
+  box-shadow: 0 8px 0 -2px #94a3b8;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.playful-input {
+  background: #f1f5f9;
+  border: 3px solid transparent;
+  border-radius: 24px;
+  transition: all 0.2s ease;
+}
+
+.playful-input:focus {
+  outline: none;
+  border-color: var(--shell-accent);
+  background: white;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--shell-accent) 15%, transparent);
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
+  width: 12px;
+  height: 12px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
+  background: #cbd5e1;
+  border-radius: 12px;
+  border: 3px solid var(--shell-bg);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #444;
+  background: #94a3b8;
 }
 
-/* Base Utility Classes for the IDE shell */
-.panel {
-  background-color: var(--shell-panel);
-  border: 1px solid var(--shell-border);
-}
-
-.input-minimal {
-  background-color: transparent;
-  border: 1px solid var(--shell-border);
-  color: var(--shell-text);
-  transition: border-color 0.15s ease;
-}
-
-.input-minimal:focus {
-  outline: none;
-  border-color: #555;
-}
-
-/* Components for the Canvas (Generated UI) */
+/* Canvas Styles */
 .canvas-container {
   background-color: var(--brand-background);
   color: var(--brand-foreground);
   font-family: var(--brand-font-family);
-  transition: all var(--brand-animation-speed) ease;
-}
-
-.canvas-card {
-  background-color: var(--brand-muted);
-  border: 1px solid var(--brand-border);
   border-radius: var(--brand-border-radius);
-  box-shadow: var(--brand-shadow);
   transition: all var(--brand-animation-speed) ease;
 }
 
@@ -97,29 +120,24 @@ body {
   color: var(--brand-background);
   border-radius: var(--brand-border-radius);
   box-shadow: var(--brand-shadow);
-  transition: all var(--brand-animation-speed) ease;
-  border: 1px solid color-mix(in srgb, var(--brand-primary) 80%, white 20%);
+  transition: all var(--brand-animation-speed) cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-weight: 800;
+  border: 2px solid color-mix(in srgb, var(--brand-primary) 80%, white 20%);
 }
 
 .canvas-button:hover {
+  transform: translateY(-4px) scale(1.02);
   filter: brightness(1.1);
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--brand-primary) 30%, transparent);
 }
 
-.canvas-button-secondary {
-  background-color: transparent;
-  color: var(--brand-foreground);
-  border: 1px solid var(--brand-border);
-  border-radius: var(--brand-border-radius);
-  transition: all var(--brand-animation-speed) ease;
-}
-
-.canvas-button-secondary:hover {
-  background-color: color-mix(in srgb, var(--brand-foreground) 5%, transparent);
+.canvas-button:active {
+  transform: translateY(2px) scale(0.98);
 }
 
 .canvas-input {
   background-color: var(--brand-background);
-  border: 1px solid var(--brand-border);
+  border: 3px solid var(--brand-border);
   border-radius: var(--brand-border-radius);
   color: var(--brand-foreground);
   transition: all var(--brand-animation-speed) ease;
@@ -128,5 +146,5 @@ body {
 .canvas-input:focus {
   outline: none;
   border-color: var(--brand-primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-primary) 20%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-primary) 20%, transparent);
 }
