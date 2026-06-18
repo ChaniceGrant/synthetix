@@ -11,10 +11,8 @@ export async function generateDesignSystem(prompt: string): Promise<DesignTokens
   }
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  // Use the stable 'v1' version instead of 'v1beta'
   const model = genAI.getGenerativeModel(
-    { model: "gemini-1.5-flash" },
-    { apiVersion: "v1" }
+    { model: "gemini-2.5-flash" }
   );
 
   const systemPrompt = `
