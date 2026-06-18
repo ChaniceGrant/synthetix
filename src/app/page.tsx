@@ -4,22 +4,32 @@ import React, { useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { generateThemeAction } from "@/lib/actions";
 import { Visualizer } from "@/components/visualizer";
-import { Sparkles, Send, Layout, Palette, Box as BoxIcon, Code } from "lucide-react";
+import { Sparkles, Send, Library, Palette, Box, Code } from "lucide-react";
 
 export default function Home() {
   const { tokens, setTokens } = useTheme();
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [status, setStatus] = useState<string | null>(null);
+
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!prompt) return;
     setLoading(true);
+    setStatus("Generating...");
     try {
       const newTokens = await generateThemeAction(prompt);
-      setTokens(newTokens);
+      // Check if we just got the default tokens back (likely due to missing key)
+      if (JSON.stringify(newTokens) === JSON.stringify(tokens)) {
+        setStatus("Generation returned same tokens. Check if API key is set.");
+      } else {
+        setTokens(newTokens);
+        setStatus("Success!");
+      }
     } catch (error) {
       console.error(error);
+      setStatus("Error: Failed to generate.");
     } finally {
       setLoading(false);
     }
@@ -52,6 +62,11 @@ export default function Home() {
           >
             {loading ? <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : "Generate"}
           </button>
+          {status && (
+            <p className={`text-center text-sm font-medium ${status.includes("Error") || status.includes("Check") ? "text-red-500" : "text-green-500"}`}>
+              {status}
+            </p>
+          )}
         </form>
       </section>
 
@@ -59,7 +74,7 @@ export default function Home() {
         <div className="space-y-8">
           <Visualizer />
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold flex items-center gap-2"><Layout size={24} /> Library</h2>
+            <h2 className="text-2xl font-bold flex items-center gap-2"><Library size={24} /> Library</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="brand-card space-y-2">
                 <button className="brand-button w-full">Primary</button>

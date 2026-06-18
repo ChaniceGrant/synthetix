@@ -37,6 +37,9 @@ const Scene = () => {
         />
       );
     }
+    if (tokens.threeJs.material === 'normal') {
+      return <meshNormalMaterial />;
+    }
     return (
       <MeshDistortMaterial
         color={tokens.colors.primary}

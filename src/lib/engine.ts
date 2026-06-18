@@ -1,15 +1,21 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { DesignTokens, defaultTokens } from "./tokens";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
 export async function generateDesignSystem(prompt: string): Promise<DesignTokens> {
+  console.log("Generating design system for prompt:", prompt);
+  console.log("API Key present:", !!process.env.GEMINI_API_KEY);
+  
   if (!process.env.GEMINI_API_KEY) {
-    console.warn("GEMINI_API_KEY is not set. Returning default tokens.");
+    console.error("GEMINI_API_KEY is MISSING in process.env");
     return defaultTokens;
   }
 
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  // Use the stable 'v1' version instead of 'v1beta'
+  const model = genAI.getGenerativeModel(
+    { model: "gemini-1.5-flash" },
+    { apiVersion: "v1" }
+  );
 
   const systemPrompt = `
     You are a professional brand designer and UI/UX engineer. 
@@ -53,8 +59,14 @@ export async function generateDesignSystem(prompt: string): Promise<DesignTokens
   try {
     const result = await model.generateContent(systemPrompt);
     const text = result.response.text().trim();
-    const jsonStr = text.replace(/```json\n?|\n?```/g, "");
-    return JSON.parse(jsonStr) as DesignTokens;
+    
+    // Extract JSON using regex in case there's preamble or postamble
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      throw new Error("No JSON found in response");
+    }
+    
+    return JSON.parse(jsonMatch[0]) as DesignTokens;
   } catch (error) {
     console.error("Failed to generate design system:", error);
     return defaultTokens;
